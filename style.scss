@@ -1,0 +1,199 @@
+/***** VARIABLES *****/
+$duration: 0.3s;
+$background-color: #32c19b;
+$text-color: #000;
+$font-primary: Helvetica, sans-serif;
+$box-shadow-default: 0 0 30px rgba(0, 0, 0, 0.1);
+$box-shadow-hover: 0 0 50px rgba(0, 0, 0, 0.4);
+$font-size-title: 22px;
+$font-size-subtitle: 18px;
+$font-size-description: 14px;
+
+/***** MIXINS *****/
+@mixin transition-default {
+  transition: all $duration ease;
+}
+
+@mixin blur-animation($color) {
+  @keyframes blurAnimation {
+    0% {
+      opacity: 0.6;
+      text-shadow: 0px 5px 5px rgba($color, 0.6);
+    }
+    100% {
+      opacity: 1;
+      text-shadow: 0px 5px 5px rgba($color, 0);
+    }
+  }
+}
+
+/***** GLOBAL *****/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-primary;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/***** CARD STYLES *****/
+.card {
+  width: 370px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: $box-shadow-default;
+  @include transition-default;
+
+  &:hover {
+    box-shadow: $box-shadow-hover;
+
+    & img {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+
+    & .card__thumb {
+      height: 90px;
+    }
+
+    & .card__body {
+      height: 330px;
+    }
+
+    & .card__title {
+      @include blur-animation($text-color);
+      animation: blurAnimation $duration;
+    }
+
+    & .card__subtitle {
+      @include blur-animation($background-color);
+      animation: blurAnimation $duration;
+    }
+
+    & .card__description {
+      opacity: 1;
+      transition-delay: 0.1s;
+      transform: translateY(0);
+    }
+  }
+
+  .card__date {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border-radius: 50%;
+    background: $background-color;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    line-height: 14px;
+    font-weight: bold;
+
+    .card__day {
+      display: block;
+      font-size: 14px;
+    }
+
+    .card__month {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.card__thumb {
+  height: 235px;
+  overflow: hidden;
+  background-color: #000;
+  @include transition-default;
+
+  img {
+    width: 375px;
+    height: 235px;
+    display: block;
+    opacity: 1;
+    @include transition-default;
+    transform: scale(1);
+  }
+}
+
+.card__body {
+  position: relative;
+  padding: 20px;
+  height: 185px;
+  @include transition-default;
+
+  .card__category,
+  .card__title,
+  .card__subtitle {
+    margin: 0;
+    padding: 0;
+  }
+
+  .card__category {
+    position: absolute;
+    top: -30px;
+    left: 0;
+    width: 80px;
+    height: 30px;
+    background: $background-color;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 5px;
+  }
+
+  .card__title {
+    font-size: $font-size-title;
+    color: $text-color;
+    font-weight: bold;
+  }
+
+  .card__subtitle {
+    font-size: $font-size-subtitle;
+    color: $background-color;
+    margin: 6px 0;
+  }
+
+  .card__description {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 60px;
+    color: grey;
+    font-size: $font-size-description;
+    line-height: 27px;
+    opacity: 0;
+    @include transition-default;
+    transition-delay: 0;
+    transform: translateY(25px);
+  }
+}
+
+.card__footer {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: #a3a9ab;
+}
